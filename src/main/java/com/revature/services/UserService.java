@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import com.revature.beans.User;
 import com.revature.daos.UserDao;
 import com.revature.util.ScannerUtil;
@@ -24,8 +26,25 @@ public class UserService {
 		
 		// Validate all this data
 		
-		User user = new User(firstName, lastName, email);
+		User user = new User(0, firstName, lastName, email);
 		
-		user = userDao.saveUser(user);
+		userDao.safeSaveUser(user);
+		System.out.println(user);
 	}
+
+	public void getUserById() {
+		System.out.println("Enter the user ID:");
+		int id = ScannerUtil.getNumericChoice(10000);
+		User user = this.userDao.getUserById(id);
+		System.out.println(user);
+	}
+
+	public void getUsersByLastName() {
+		System.out.println("Enter last name: ");
+		String lastName = ScannerUtil.getLine();
+		List<User> users = this.userDao.getUsersByLastName(lastName);
+		users.forEach(System.out::println);
+	}
+	
+	
 }
